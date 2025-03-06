@@ -8,23 +8,29 @@
 		<version>3.4.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.gamingplatform</groupId>
+	<groupId>io.gaming.platform</groupId>
 	<artifactId>game-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>game-service</name>
-	<description>Demo project for Spring Boot</description>
+	<name>GP Game Service</name>
+	<description>Game service component for the Gaming Platform that manages game events and publishes them to Kafka</description>
 	<url/>
 	<licenses>
-		<license/>
+		<license>
+			<name>MIT License</name>
+			<url>https://opensource.org/licenses/MIT</url>
+		</license>
 	</licenses>
 	<developers>
-		<developer/>
+		<developer>
+			<name>Gaming Platform Team</name>
+			<organization>Gaming Platform</organization>
+			<organizationUrl>https://gaming-platform.io</organizationUrl>
+		</developer>
 	</developers>
 	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
+		<connection>scm:git:git://github.com/jaclondon11/gp-game-service.git</connection>
+		<developerConnection>scm:git:ssh://github.com:jaclondon11/gp-game-service.git</developerConnection>
+		<url>https://github.com/jaclondon11/gp-game-service</url>
 	</scm>
 	<properties>
 		<java.version>21</java.version>
