@@ -32,7 +32,9 @@ public class GameEventController {
     public ResponseEntity<GameEventResponse> levelUp(@Valid @RequestBody LevelUpRequest request) {
         log.debug("Processing level-up event for player: {}", request.playerId());
         return handleGameEvent(
-            () -> eventProducer.sendLevelUpEvent(request.playerId(), request.newLevel()),
+            () -> eventProducer.sendLevelUpEvent(
+            		request.playerId(),
+            		request.newLevel()),
             GameEventType.LEVEL_UP,
             request.playerId()
         );
@@ -43,7 +45,9 @@ public class GameEventController {
         log.debug("Processing item acquisition event for player: {}", request.playerId());
         return handleGameEvent(
             () -> eventProducer.sendItemAcquiredEvent(
-                request.playerId(), request.itemName(), request.rarity()),
+                request.playerId(),
+                request.itemName(),
+                request.rarity()),
             GameEventType.ITEM_ACQUIRED,
             request.playerId()
         );
@@ -54,7 +58,8 @@ public class GameEventController {
         log.debug("Processing challenge completion event for player: {}", request.playerId());
         return handleGameEvent(
             () -> eventProducer.sendChallengeCompletedEvent(
-                request.playerId(), request.challengeName()),
+                request.playerId(),
+                request.challengeName()),
             GameEventType.CHALLENGE_COMPLETED,
             request.playerId()
         );
@@ -66,7 +71,9 @@ public class GameEventController {
             request.attackerId(), request.defenderId());
         return handleGameEvent(
             () -> eventProducer.sendPvpAttackEvent(
-                request.attackerId(), request.defenderId(), request.damageDealt()),
+                request.attackerId(),
+                request.defenderId(),
+                request.damageDealt()),
             GameEventType.PVP_ATTACK,
             request.attackerId()
         );
@@ -78,7 +85,9 @@ public class GameEventController {
             request.defeatedPlayerId(), request.victorPlayerId());
         return handleGameEvent(
             () -> eventProducer.sendPvpDefeatEvent(
-                request.defeatedPlayerId(), request.victorPlayerId(), request.battleLocation()),
+                request.defeatedPlayerId(),
+                request.victorPlayerId(),
+                request.battleLocation()),
             GameEventType.PVP_DEFEAT,
             request.defeatedPlayerId()
         );

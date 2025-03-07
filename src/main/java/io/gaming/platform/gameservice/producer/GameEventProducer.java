@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.gaming.platform.gameservice.model.GameEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,15 @@ public class GameEventProducer {
     
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
+    private final String topicName;
 
     public GameEventProducer(
             KafkaTemplate<String, String> kafkaTemplate,
-            ObjectMapper objectMapper) {
+            ObjectMapper objectMapper,
+            @Value("${app.kafka.topic}") String topicName) {
         this.kafkaTemplate = kafkaTemplate;
         this.objectMapper = objectMapper;
+        this.topicName = topicName;
     }
 
     /**
@@ -71,7 +75,7 @@ public class GameEventProducer {
             String message = objectMapper.writeValueAsString(event);
             String key = event.playerId().toString();
 
-            return kafkaTemplate.send(key, message)
+            return kafkaTemplate.send(topicName, key, message)
                 .thenApply(result -> {
                     log.info("Successfully sent game event {}: {} to topic {} partition {} offset {}",
                         event.eventType(), message, result.getRecordMetadata().topic(),

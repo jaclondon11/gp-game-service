@@ -41,7 +41,7 @@ class GameEventProducerTest {
 
     @BeforeEach
     void setUp() {
-        gameEventProducer = new GameEventProducer(kafkaTemplate, objectMapper);
+        gameEventProducer = new GameEventProducer(kafkaTemplate, objectMapper, TOPIC);
     }
 
     @Test
@@ -52,7 +52,7 @@ class GameEventProducerTest {
             {"eventType":"LEVEL_UP","playerId":123,"data":{"newLevel":5}}""";
         
         when(objectMapper.writeValueAsString(any())).thenReturn(eventJson);
-        when(kafkaTemplate.send(eq(PLAYER_ID.toString()), eq(eventJson)))
+        when(kafkaTemplate.send(eq(TOPIC), eq(PLAYER_ID.toString()), eq(eventJson)))
             .thenReturn(CompletableFuture.completedFuture(createSendResult()));
 
         // Act
@@ -60,7 +60,7 @@ class GameEventProducerTest {
 
         // Assert
         assertThat(result).isCompleted();
-        verify(kafkaTemplate).send(eq(PLAYER_ID.toString()), eq(eventJson));
+        verify(kafkaTemplate).send(eq(TOPIC), eq(PLAYER_ID.toString()), eq(eventJson));
     }
 
     @Test
@@ -72,7 +72,7 @@ class GameEventProducerTest {
             {"eventType":"ITEM_ACQUIRED","playerId":123,"data":{"itemName":"Legendary Sword","rarity":"LEGENDARY"}}""";
         
         when(objectMapper.writeValueAsString(any())).thenReturn(eventJson);
-        when(kafkaTemplate.send(eq(PLAYER_ID.toString()), eq(eventJson)))
+        when(kafkaTemplate.send(eq(TOPIC), eq(PLAYER_ID.toString()), eq(eventJson)))
             .thenReturn(CompletableFuture.completedFuture(createSendResult()));
 
         // Act
@@ -80,7 +80,7 @@ class GameEventProducerTest {
 
         // Assert
         assertThat(result).isCompleted();
-        verify(kafkaTemplate).send(eq(PLAYER_ID.toString()), eq(eventJson));
+        verify(kafkaTemplate).send(eq(TOPIC), eq(PLAYER_ID.toString()), eq(eventJson));
     }
 
     @Test
@@ -91,7 +91,7 @@ class GameEventProducerTest {
             {"eventType":"CHALLENGE_COMPLETED","playerId":123,"data":{"challengeName":"Dragon Slayer"}}""";
         
         when(objectMapper.writeValueAsString(any())).thenReturn(eventJson);
-        when(kafkaTemplate.send(eq(PLAYER_ID.toString()), eq(eventJson)))
+        when(kafkaTemplate.send(eq(TOPIC), eq(PLAYER_ID.toString()), eq(eventJson)))
             .thenReturn(CompletableFuture.completedFuture(createSendResult()));
 
         // Act
@@ -99,7 +99,7 @@ class GameEventProducerTest {
 
         // Assert
         assertThat(result).isCompleted();
-        verify(kafkaTemplate).send(eq(PLAYER_ID.toString()), eq(eventJson));
+        verify(kafkaTemplate).send(eq(TOPIC), eq(PLAYER_ID.toString()), eq(eventJson));
     }
 
     @Test
@@ -110,7 +110,7 @@ class GameEventProducerTest {
             {"eventType":"PVP_ATTACK","playerId":123,"data":{"defenderId":456,"damageDealt":50}}""";
         
         when(objectMapper.writeValueAsString(any())).thenReturn(eventJson);
-        when(kafkaTemplate.send(eq(PLAYER_ID.toString()), eq(eventJson)))
+        when(kafkaTemplate.send(eq(TOPIC), eq(PLAYER_ID.toString()), eq(eventJson)))
             .thenReturn(CompletableFuture.completedFuture(createSendResult()));
 
         // Act
@@ -118,7 +118,7 @@ class GameEventProducerTest {
 
         // Assert
         assertThat(result).isCompleted();
-        verify(kafkaTemplate).send(eq(PLAYER_ID.toString()), eq(eventJson));
+        verify(kafkaTemplate).send(eq(TOPIC), eq(PLAYER_ID.toString()), eq(eventJson));
     }
 
     @Test
@@ -129,7 +129,7 @@ class GameEventProducerTest {
             {"eventType":"PVP_DEFEAT","playerId":123,"data":{"victorPlayerId":456,"battleLocation":"Ancient Arena"}}""";
         
         when(objectMapper.writeValueAsString(any())).thenReturn(eventJson);
-        when(kafkaTemplate.send(eq(PLAYER_ID.toString()), eq(eventJson)))
+        when(kafkaTemplate.send(eq(TOPIC), eq(PLAYER_ID.toString()), eq(eventJson)))
             .thenReturn(CompletableFuture.completedFuture(createSendResult()));
 
         // Act
@@ -137,11 +137,11 @@ class GameEventProducerTest {
 
         // Assert
         assertThat(result).isCompleted();
-        verify(kafkaTemplate).send(eq(PLAYER_ID.toString()), eq(eventJson));
+        verify(kafkaTemplate).send(eq(TOPIC), eq(PLAYER_ID.toString()), eq(eventJson));
     }
 
     @SuppressWarnings("serial")
-	@Test
+    @Test
     void sendGameEvent_ShouldHandleSerializationError() throws JsonProcessingException {
         // Arrange
         int newLevel = 5;
@@ -153,7 +153,7 @@ class GameEventProducerTest {
 
         // Assert
         assertThat(result).isCompletedExceptionally();
-        verify(kafkaTemplate, never()).send(anyString(), anyString());
+        verify(kafkaTemplate, never()).send(anyString(), anyString(), anyString());
     }
 
     @Test
@@ -164,7 +164,7 @@ class GameEventProducerTest {
             {"eventType":"LEVEL_UP","playerId":123,"data":{"newLevel":5}}""";
         
         when(objectMapper.writeValueAsString(any())).thenReturn(eventJson);
-        when(kafkaTemplate.send(eq(PLAYER_ID.toString()), eq(eventJson)))
+        when(kafkaTemplate.send(eq(TOPIC), eq(PLAYER_ID.toString()), eq(eventJson)))
             .thenReturn(CompletableFuture.failedFuture(new RuntimeException("Kafka error")));
 
         // Act
