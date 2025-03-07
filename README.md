@@ -42,6 +42,3 @@ mvn spring-boot:run
 
 The service will start on port 8080 by default.
 
-## API Documentation
-
-API documentation is available at `/swagger-ui.html` when the service is running.
