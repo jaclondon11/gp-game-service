@@ -58,9 +58,9 @@ public record GameEvent(
             GameEventType.PVP_ATTACK,
             UUID.randomUUID().toString(),
             Instant.now(),
-            attackerId,
+            defenderId,
             Map.of(
-                "defenderId", defenderId,
+                "attackerId", attackerId,
                 "damageDealt", damageDealt
             )
         );

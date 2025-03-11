@@ -11,17 +11,32 @@ public record GameEventResponse(
     GameEventType eventType,
     Instant timestamp,
     Long playerId,
-    String status,
-    String message
+    String errorMessage
 ) {
-    public static GameEventResponse success(String eventId, EventCategory category, GameEventType eventType, 
-            Instant timestamp, Long playerId) {
-        return new GameEventResponse(eventId, category, eventType, timestamp, playerId, "ACCEPTED", 
-            "Event processed successfully");
+    public static GameEventResponse success(
+    		String eventId,
+    		EventCategory category,
+    		GameEventType eventType, 
+            Instant timestamp,
+            Long playerId) {
+        return new GameEventResponse(eventId, category, eventType, timestamp, playerId, null);
     }
 
-    public static GameEventResponse error(GameEventType eventType, Long playerId, String errorMessage) {
-        return new GameEventResponse(null, EventCategory.GAME, eventType, Instant.now(), playerId, 
-            "ERROR", errorMessage);
+    public static GameEventResponse error(
+    		GameEventType eventType,
+    		Long playerId,
+    		String errorMessage) {
+		return new GameEventResponse(
+			null,
+			EventCategory.GAME,
+			eventType,
+			Instant.now(),
+			playerId,
+			errorMessage
+		);
+    }
+    
+    public boolean isSuccess() {
+        return errorMessage == null;
     }
 } 
