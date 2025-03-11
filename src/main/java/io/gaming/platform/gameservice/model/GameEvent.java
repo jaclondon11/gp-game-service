@@ -52,7 +52,7 @@ public record GameEvent(
         );
     }
 
-    public static GameEvent pvpAttack(Long attackerId, Long defenderId, int damageDealt) {
+    public static GameEvent pvpAttack(Long defenderId, Long attackerId, int damageDealt) {
         return new GameEvent(
             EventCategory.GAME,
             GameEventType.PVP_ATTACK,

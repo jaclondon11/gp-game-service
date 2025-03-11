@@ -55,8 +55,8 @@ public class GameEventProducer {
      * Sends a PvP attack event to Kafka.
      */
     public CompletableFuture<SendResult<String, String>> sendPvpAttackEvent(
-            Long attackerId, Long defenderId, int damageDealt) {
-        return sendGameEvent(GameEvent.pvpAttack(attackerId, defenderId, damageDealt));
+    		Long defenderId, Long attackerId , int damageDealt) {
+        return sendGameEvent(GameEvent.pvpAttack(defenderId, attackerId, damageDealt));
     }
 
     /**

@@ -107,7 +107,7 @@ class GameEventProducerTest {
         // Arrange
         int damageDealt = 50;
         String eventJson = """
-            {"eventType":"PVP_ATTACK","playerId":123,"data":{"defenderId":456,"damageDealt":50}}""";
+            {"eventType":"PVP_ATTACK","playerId":123,"data":{"attackerId":456,"damageDealt":50}}""";
         
         when(objectMapper.writeValueAsString(any())).thenReturn(eventJson);
         when(kafkaTemplate.send(eq(TOPIC), eq(PLAYER_ID.toString()), eq(eventJson)))
