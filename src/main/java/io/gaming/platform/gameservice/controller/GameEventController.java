@@ -71,8 +71,8 @@ public class GameEventController {
             request.attackerId(), request.defenderId());
         return handleGameEvent(
             () -> eventProducer.sendPvpAttackEvent(
+        		request.defenderId(),
                 request.attackerId(),
-                request.defenderId(),
                 request.damageDealt()),
             GameEventType.PVP_ATTACK,
             request.attackerId()
